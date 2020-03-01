@@ -27,7 +27,7 @@ const Toggle = ({ theme, toggleTheme }) => {
 	const isLight = theme === 'light';
 	return (
 		<ToggleContainer onClick={toggleTheme}>
-			{isLight ? moonEnabled : moonDisabled} Dark Mode
+			{isLight ? moonDisabled : moonEnabled} Dark Mode
 		</ToggleContainer>
 	);
 };
