@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { useDarkMode } from '../themes/useDarkMode';
 import { lightTheme, darkTheme } from '../themes/themes';
 import { GlobalStyles } from '../themes/global';
+import Header from '../components/Header';
 import Toggle from '../components/Toggle';
 
 const App = () => {
@@ -16,10 +17,9 @@ const App = () => {
 	return (
 		<ThemeProvider theme={themeMode}>
 			<GlobalStyles />
-			<header>
-				<h1>Where in the world?</h1>
+			<Header>
 				<Toggle theme={theme} toggleTheme={toggleTheme} />
-			</header>
+			</Header>
 			<main>
 				<p>This is main container</p>
 			</main>
