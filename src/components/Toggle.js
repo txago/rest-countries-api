@@ -18,9 +18,10 @@ const ToggleContainer = styled.a`
 	border: none;
 	margin: 0;
 	padding: 0;
-	font-size: 14px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 18px;
 	cursor: pointer;
-	font-family: 'Nunito Sans', sans-serif;
 `;
 
 const Toggle = ({ theme, toggleTheme }) => {
