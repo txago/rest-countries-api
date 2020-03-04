@@ -9,26 +9,24 @@ import Header from '../components/Header';
 import Toggle from '../components/Toggle';
 
 const App = () => {
-	const [countries, setCountries] = useState([]);
+	const [data, setData] = useState([]);
 	const [query, setQuery] = useState('');
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 	const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
+	const handleChange = e => {
+		setQuery(e.target.value);
+	};
+
 	useEffect(() => {
-		let ignore = false;
-		async function fetchData() {
-			const countries = await fetch(
-				`https://restcountries.eu/rest/v2/all`
-			).then(res => {
-				return res.json();
+		fetch('https://restcountries.eu/rest/v2/all')
+			.then(response => response.json())
+			.then(data => {
+				const results = data.filter(country =>
+					country.name.toLowerCase().includes(query)
+				);
+				setData(results);
 			});
-			setCountries(countries);
-			if (!ignore) setCountries(countries);
-		}
-		fetchData();
-		return () => {
-			ignore = true;
-		};
 	}, [query]);
 
 	if (!componentMounted) {
@@ -43,13 +41,13 @@ const App = () => {
 			</Header>
 			<input
 				value={query}
-				onChange={e => setQuery(e.target.value)}
+				onChange={handleChange}
 				name='search'
 				type='search'
 				placeholder='Search for a country...'
 			/>
 			<CountriesList>
-				{countries.map((country, index) => (
+				{data.map((country, index) => (
 					<Card
 						key={index}
 						flag={country.flag}
