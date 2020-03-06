@@ -11,27 +11,39 @@ import Toggle from '../components/Toggle';
 const App = () => {
 	const [data, setData] = useState([]);
 	const [query, setQuery] = useState('');
-	const [theme, toggleTheme, componentMounted] = useDarkMode();
+	const [region, setRegion] = useState('');
+	const [theme, toggleTheme] = useDarkMode();
 	const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
 	const handleChange = e => {
 		setQuery(e.target.value);
 	};
 
+	const regionFilter = e => {
+		setRegion(e.target.value);
+	};
+
 	useEffect(() => {
-		fetch('https://restcountries.eu/rest/v2/all')
-			.then(response => response.json())
-			.then(data => {
-				const results = data.filter(country =>
-					country.name.toLowerCase().includes(query)
-				);
-				setData(results);
-			});
+		const request = async () => {
+			const response = await fetch('https://restcountries.eu/rest/v2/all');
+			const json = await response.json();
+			setData(
+				json.filter(country => country.name.toLowerCase().includes(query))
+			);
+		};
+		request();
 	}, [query]);
 
-	if (!componentMounted) {
-		return <div />;
-	}
+	useEffect(() => {
+		const request = async () => {
+			const response = await fetch('https://restcountries.eu/rest/v2/all');
+			const json = await response.json();
+			setData(
+				json.filter(country => country.region.toLowerCase().includes(region))
+			);
+		};
+		request();
+	}, [region]);
 
 	return (
 		<ThemeProvider theme={themeMode}>
@@ -46,6 +58,16 @@ const App = () => {
 				type='search'
 				placeholder='Search for a country...'
 			/>
+			<select value={region} onChange={regionFilter} name='region'>
+				<option value='' defaultValue>
+					Filter by Region
+				</option>
+				<option value='africa'>Africa</option>
+				<option value='america'>America</option>
+				<option value='asia'>Asia</option>
+				<option value='europe'>Europe</option>
+				<option value='oceania'>Oceania</option>
+			</select>
 			<CountriesList>
 				{data.map((country, index) => (
 					<Card
