@@ -16,12 +16,12 @@ const App = () => {
 	const [theme, toggleTheme] = useDarkMode();
 	const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
-	const handleChange = e => {
-		setQuery(e.target.value);
+	const handleCountrySearchChange = evt => {
+		setQuery(evt.target.value);
 	};
 
-	const regionFilter = e => {
-		setRegion(e.target.value);
+	const handleRegionChange = evt => {
+		setRegion(evt.target.value);
 	};
 
 	useEffect(() => {
@@ -60,12 +60,12 @@ const App = () => {
 			</Header>
 			<input
 				value={query}
-				onChange={handleChange}
+				onChange={handleCountrySearchChange}
 				name='search'
 				type='search'
 				placeholder='Search for a country...'
 			/>
-			<select value={region} onChange={regionFilter} name='region'>
+			<select value={region} onChange={handleRegionChange} name='region'>
 				<option value='' defaultValue>
 					Filter by Region
 				</option>
