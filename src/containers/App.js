@@ -7,43 +7,51 @@ import Card from '../components/Card';
 import CountriesList from '../components/CountriesList';
 import Header from '../components/Header';
 import Toggle from '../components/Toggle';
+import { fetchCountries } from '../api';
 
 const App = () => {
+	const [countryData, setCountryData] = useState([]);
 	const [data, setData] = useState([]);
 	const [query, setQuery] = useState('');
 	const [region, setRegion] = useState('');
 	const [theme, toggleTheme] = useDarkMode();
 	const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
-	const handleChange = e => {
-		setQuery(e.target.value);
+	const handleCountrySearchChange = evt => {
+		setQuery(evt.target.value);
 	};
 
-	const regionFilter = e => {
-		setRegion(e.target.value);
+	const handleRegionChange = evt => {
+		setRegion(evt.target.value);
 	};
 
 	useEffect(() => {
-		const request = async () => {
-			const response = await fetch('https://restcountries.eu/rest/v2/all');
-			const json = await response.json();
-			setData(
-				json.filter(country => country.name.toLowerCase().includes(query))
-			);
-		};
-		request();
-	}, [query]);
+	  fetchCountries()
+		  .then((json) => {
+		  	setCountryData(json);
+		  	setData(json);
+		  	// TODO: Talvez deveria resetar o region e query, nao tenho certeza
+		  })
+		  .catch((err) => {
+		    // TODO: Implementar manipulaçao de erro
+		  })
+	}, []); // <- Faz só um fetch no didMount e separa dados sem filtro de dados filtrados localmente
 
 	useEffect(() => {
-		const request = async () => {
-			const response = await fetch('https://restcountries.eu/rest/v2/all');
-			const json = await response.json();
-			setData(
-				json.filter(country => country.region.toLowerCase().includes(region))
-			);
-		};
-		request();
-	}, [region]);
+		let filteredData = countryData;
+
+		if (region) {
+			filteredData = filteredData
+				.filter(country => country.region.toLowerCase().includes(region))
+		}
+
+		if (query) {
+			filteredData = filteredData
+				.filter(country => country.name.toLowerCase().includes(query))
+		}
+
+		setData(filteredData);
+	}, [region, query]); // <- Os dois filtros devem funcionar juntos agora
 
 	return (
 		<ThemeProvider theme={themeMode}>
@@ -53,12 +61,12 @@ const App = () => {
 			</Header>
 			<input
 				value={query}
-				onChange={handleChange}
+				onChange={handleCountrySearchChange}
 				name='search'
 				type='search'
 				placeholder='Search for a country...'
 			/>
-			<select value={region} onChange={regionFilter} name='region'>
+			<select value={region} onChange={handleRegionChange} name='region'>
 				<option value='' defaultValue>
 					Filter by Region
 				</option>
@@ -68,10 +76,16 @@ const App = () => {
 				<option value='europe'>Europe</option>
 				<option value='oceania'>Oceania</option>
 			</select>
+			{/* 
+				Serial legal ter:
+					- Exibir algo enquanto carrega (e gerenciar esse estado transitorio)
+					- Se algo der errado no fetch, mostrar uma mensagem
+						- Oferecer uma alternativa ao usuario, algo como retry
+			 */}
 			<CountriesList>
-				{data.map((country, index) => (
+				{data.map((country) => (
 					<Card
-						key={index}
+						key={country.name}
 						flag={country.flag}
 						name={country.name}
 						population={country.population}

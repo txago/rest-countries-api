@@ -1,8 +1,9 @@
 const fetchCountries = () => {
 	return fetch(`https://restcountries.eu/rest/v2/all`)
 		.then(response => response.json())
-		.then(data => data)
-		.catch(error => this.setState({ error, isLoading: false }));
+		.catch((error) => {
+      throw new Error(`fetchCountries failed: ${error.message}`)
+    });
 };
 
-export default fetchCountries;
+export { fetchCountries };
