@@ -76,6 +76,12 @@ const App = () => {
 				<option value='europe'>Europe</option>
 				<option value='oceania'>Oceania</option>
 			</select>
+			{/* 
+				Serial legal ter:
+					- Exibir algo enquanto carrega (e gerenciar esse estado transitorio)
+					- Se algo der errado no fetch, mostrar uma mensagem
+						- Oferecer uma alternativa ao usuario, algo como retry
+			 */}
 			<CountriesList>
 				{data.map((country) => (
 					<Card
