@@ -7,6 +7,7 @@ import Card from '../components/Card';
 import CountriesList from '../components/CountriesList';
 import Header from '../components/Header';
 import Toggle from '../components/Toggle';
+import { fetchCountries } from '../api';
 
 const App = () => {
 	const [data, setData] = useState([]);
@@ -25,22 +26,28 @@ const App = () => {
 
 	useEffect(() => {
 		const request = async () => {
-			const response = await fetch('https://restcountries.eu/rest/v2/all');
-			const json = await response.json();
-			setData(
-				json.filter(country => country.name.toLowerCase().includes(query))
-			);
+			try {
+				const json = await fetchCountries();
+				setData(
+					json.filter(country => country.name.toLowerCase().includes(query))
+				);
+			} catch(err) {
+				// TODO: Implementar manipulaçao de erro
+			}
 		};
 		request();
 	}, [query]);
 
 	useEffect(() => {
 		const request = async () => {
-			const response = await fetch('https://restcountries.eu/rest/v2/all');
-			const json = await response.json();
-			setData(
-				json.filter(country => country.region.toLowerCase().includes(region))
-			);
+			try {
+				const json = await fetchCountries();
+				setData(
+					json.filter(country => country.region.toLowerCase().includes(region))
+				);
+			} catch(err) {
+				// TODO: Implementar manipulaçao de erro
+			}
 		};
 		request();
 	}, [region]);
