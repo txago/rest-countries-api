@@ -77,9 +77,9 @@ const App = () => {
 				<option value='oceania'>Oceania</option>
 			</select>
 			<CountriesList>
-				{data.map((country, index) => (
+				{data.map((country) => (
 					<Card
-						key={index}
+						key={country.name}
 						flag={country.flag}
 						name={country.name}
 						population={country.population}
