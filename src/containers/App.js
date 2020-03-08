@@ -10,6 +10,7 @@ import Toggle from '../components/Toggle';
 import { fetchCountries } from '../api';
 
 const App = () => {
+	const [countryData, setCountryData] = useState([]);
 	const [data, setData] = useState([]);
 	const [query, setQuery] = useState('');
 	const [region, setRegion] = useState('');
@@ -25,32 +26,32 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		const request = async () => {
-			try {
-				const json = await fetchCountries();
-				setData(
-					json.filter(country => country.name.toLowerCase().includes(query))
-				);
-			} catch(err) {
-				// TODO: Implementar manipulaçao de erro
-			}
-		};
-		request();
-	}, [query]);
+	  fetchCountries()
+		  .then((json) => {
+		  	setCountryData(json);
+		  	setData(json);
+		  	// TODO: Talvez deveria resetar o region e query, nao tenho certeza
+		  })
+		  .catch((err) => {
+		    // TODO: Implementar manipulaçao de erro
+		  })
+	}, []); // <- Faz só um fetch no didMount e separa dados sem filtro de dados filtrados localmente
 
 	useEffect(() => {
-		const request = async () => {
-			try {
-				const json = await fetchCountries();
-				setData(
-					json.filter(country => country.region.toLowerCase().includes(region))
-				);
-			} catch(err) {
-				// TODO: Implementar manipulaçao de erro
-			}
-		};
-		request();
-	}, [region]);
+		let filteredData = countryData;
+
+		if (region) {
+			filteredData = filteredData
+				.filter(country => country.region.toLowerCase().includes(region))
+		}
+
+		if (query) {
+			filteredData = filteredData
+				.filter(country => country.name.toLowerCase().includes(query))
+		}
+
+		setData(filteredData);
+	}, [region, query]); // <- Os dois filtros devem funcionar juntos agora
 
 	return (
 		<ThemeProvider theme={themeMode}>
