@@ -18,6 +18,10 @@ const GlobalStyles = createGlobalStyle`
     line-height: 24px;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .container {
     width: 1280px;
     height: 80px;
