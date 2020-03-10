@@ -7,6 +7,11 @@ const CardWrapper = styled.div`
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 	font-size: 14px;
 	background-color: ${({ theme }) => theme.cardBackground};
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		transform: scale(1.1);
+	}
 `;
 
 const FlagWrapper = styled.img`
@@ -22,21 +27,30 @@ const CardDetails = styled.div`
 	line-height: 10px;
 `;
 
+const CardTitle = styled.h2`
+	color: ${({ theme }) => theme.textColor};
+	margin-bottom: 20px;
+`;
+
+const CardParagraph = styled.p`
+	color: ${({ theme }) => theme.textColor};
+`;
+
 const Card = ({ flag, name, population, region, capital }) => {
 	return (
 		<CardWrapper>
 			<FlagWrapper src={flag} />
 			<CardDetails>
-				<h2 style={{ marginBottom: '30px' }}>{name}</h2>
-				<p>
+				<CardTitle>{name}</CardTitle>
+				<CardParagraph>
 					<span style={{ fontWeight: 600 }}>Population:</span> {population}
-				</p>
-				<p>
+				</CardParagraph>
+				<CardParagraph>
 					<span style={{ fontWeight: 600 }}>Region:</span> {region}
-				</p>
-				<p>
+				</CardParagraph>
+				<CardParagraph>
 					<span style={{ fontWeight: 600 }}>Capital:</span> {capital}
-				</p>
+				</CardParagraph>
 			</CardDetails>
 		</CardWrapper>
 	);
