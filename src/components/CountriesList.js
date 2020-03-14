@@ -6,12 +6,44 @@ import styled from 'styled-components';
 import Card from './Card';
 
 const CountriesWrapper = styled.div`
-	width: 1280px;
-	margin: 0 auto;
+	width: auto;
+	margin: 0 20px;
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-column-gap: 80px;
-	grid-row-gap: 80px;
+	grid-template-columns: repeat(1, 1fr);
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+	@media (min-width: 576px) {
+		width: 540px;
+		margin: 0 auto;
+		justify-content: space-between;
+		grid-template-columns: repeat(2, 1fr);
+		grid-column-gap: 20px;
+		grid-row-gap: 20px;
+	}
+	@media (min-width: 768px) {
+		width: 720px;
+		grid-template-columns: repeat(3, 1fr);
+		grid-column-gap: 30px;
+		grid-row-gap: 30px;
+	}
+	@media (min-width: 1024px) {
+		width: 960px;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 40px;
+		grid-row-gap: 40px;
+	}
+	@media (min-width: 1280px) {
+		width: 1140px;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 40px;
+		grid-row-gap: 40px;
+	}
+	@media (min-width: 1366px) {
+		width: 1280px;
+		grid-template-columns: repeat(4, 1fr);
+		grid-column-gap: 80px;
+		grid-row-gap: 80px;
+	}
 `;
 
 const CountriesList = () => {
@@ -58,7 +90,6 @@ const CountriesList = () => {
 				type='search'
 				placeholder='Search for a country...'
 			/>
-
 			<select value={region} onChange={handleRegionChange} name='region'>
 				<option value='' defaultValue>
 					Filter by Region
@@ -69,10 +100,12 @@ const CountriesList = () => {
 				<option value='europe'>Europe</option>
 				<option value='oceania'>Oceania</option>
 			</select>
-
 			<CountriesWrapper>
 				{countryData.map(country => (
-					<Link to={`/${createSlug(country.name)}`} key={country.name}>
+					<Link
+						to={`/${createSlug(country.name)}`}
+						key={country.name}
+						title={country.name}>
 						<Card
 							flag={country.flag}
 							name={country.name}

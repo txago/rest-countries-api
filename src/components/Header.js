@@ -5,6 +5,36 @@ import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	background-color: ${({ theme }) => theme.cardBackground};
+`;
+
+const ContainerRow = styled.div`
+	width: auto;
+	height: 80px;
+	margin: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	@media (min-width: 576px) {
+		width: 540px;
+		margin: 0 auto;
+	}
+	@media (min-width: 768px) {
+		width: 720px;
+		margin: 0 auto;
+	}
+	@media (min-width: 1024px) {
+		width: 960px;
+		margin: 0 auto;
+	}
+	@media (min-width: 1280px) {
+		width: 1140px;
+		margin: 0 auto;
+	}
+	@media (min-width: 1366px) {
+		width: 1280px;
+		margin: 0 auto;
+	}
 `;
 
 const HeaderLink = styled.h1`
@@ -14,12 +44,12 @@ const HeaderLink = styled.h1`
 const Header = ({ children }) => {
 	return (
 		<HeaderWrapper>
-			<Link to={'/'}>
-				<div className='container'>
+			<ContainerRow>
+				<Link to={'/'}>
 					<HeaderLink>Where in the world?</HeaderLink>
-					<>{children}</>
-				</div>
-			</Link>
+				</Link>
+				<>{children}</>
+			</ContainerRow>
 		</HeaderWrapper>
 	);
 };

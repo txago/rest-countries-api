@@ -8,19 +8,20 @@ import { faMoon as fasFaMoon } from '@fortawesome/free-solid-svg-icons';
 const moonEnabled = (
 	<FontAwesomeIcon style={{ marginRight: '10px' }} icon={fasFaMoon} />
 );
+
 const moonDisabled = (
 	<FontAwesomeIcon style={{ marginRight: '10px' }} icon={farFaMoon} />
 );
 
 const ToggleContainer = styled.a`
-	color: ${({ theme }) => theme.textColor};
-	display: flex;
-	border: none;
 	margin: 0;
 	padding: 0;
+	display: flex;
 	font-size: 16px;
 	font-weight: 600;
 	line-height: 18px;
+	color: ${({ theme }) => theme.textColor};
+	border: none;
 	cursor: pointer;
 `;
 
