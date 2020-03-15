@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { node } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
@@ -15,30 +15,23 @@ const ContainerRow = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
 	@media (min-width: 576px) {
 		width: 540px;
 		margin: 0 auto;
 	}
 	@media (min-width: 768px) {
 		width: 720px;
-		margin: 0 auto;
 	}
 	@media (min-width: 1024px) {
 		width: 960px;
-		margin: 0 auto;
 	}
 	@media (min-width: 1280px) {
 		width: 1140px;
-		margin: 0 auto;
 	}
 	@media (min-width: 1366px) {
 		width: 1280px;
-		margin: 0 auto;
 	}
-`;
-
-const HeaderLink = styled.h1`
-	color: ${({ theme }) => theme.textColor};
 `;
 
 const Header = ({ children }) => {
@@ -46,16 +39,16 @@ const Header = ({ children }) => {
 		<HeaderWrapper>
 			<ContainerRow>
 				<Link to={'/'}>
-					<HeaderLink>Where in the world?</HeaderLink>
+					<h1>Where in the world?</h1>
 				</Link>
-				<>{children}</>
+				{children}
 			</ContainerRow>
 		</HeaderWrapper>
 	);
 };
 
 Header.propTypes = {
-	children: PropTypes.node.isRequired
+	children: node.isRequired
 };
 
 export default Header;

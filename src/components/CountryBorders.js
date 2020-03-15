@@ -1,79 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchCodes } from '../services/codes';
+import { node } from 'prop-types';
+import { fetchCodes } from '../services/countryCodes';
 import { createSlug } from '../utils/slug';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Button from './Button';
 
 const CountryRelated = styled.div`
-	width: 100%;
+	width: auto;
 	margin: 30px 0;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
+	flex-wrap: wrap;
 
-	> div {
-		margin-left: 20px;
-	}
-`;
-
-const ButtonWrapper = styled.div`
-	width: auto;
-	display: flex;
-	align-self: flex-start;
-	padding: 10px 20px;
-	border-radius: 6px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-	background-color: ${({ theme }) => theme.cardBackground};
-	transition: all 0.2s ease-in-out;
-	cursor: pointer;
-
-	a {
-		color: ${({ theme }) => theme.textColor};
-	}
-
-	&:hover {
-		transform: scale(1.1);
+	> a > div {
+		margin: 5px 10px 5px 0;
 	}
 `;
 
 const CountryBorders = ({ borderName }) => {
 	const [borderCountries, setBorderCountries] = useState([]);
-	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		fetchCodes(borderName).then(json => {
 			setBorderCountries(json);
-			if (json.status !== 400) {
-				setLoading(true);
-			}
 		});
 	}, [borderName]);
 
-	return loading ? (
+	return (
 		<CountryRelated>
-			<span style={{ fontWeight: 800 }}>Border Countries:</span>
+			<span style={{ fontWeight: 800, marginRight: '10px' }}>
+				Border Countries:
+			</span>
 			{borderCountries.map(country => {
 				return (
-					<ButtonWrapper
-						key={country.name}
+					<Link
+						to={`/${createSlug(country.name)}`}
 						title={country.name}
-						style={{ marginLeft: '10px' }}>
-						<Link to={`/${createSlug(country.name).toLowerCase()}`}>
-							{country.name}
-						</Link>
-					</ButtonWrapper>
+						key={country.name}>
+						<Button>{country.name}</Button>
+					</Link>
 				);
 			})}
 		</CountryRelated>
-	) : (
-		<span style={{ fontWeight: 800 }}>This country has no borders.</span>
 	);
 };
 
 CountryBorders.propTypes = {
-	borderName: PropTypes.node.isRequired
+	borderName: node.isRequired
 };
 
 export default CountryBorders;

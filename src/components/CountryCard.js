@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { string, number } from 'prop-types';
 
 const CardWrapper = styled.div`
 	font-size: 14px;
@@ -16,10 +16,22 @@ const CardWrapper = styled.div`
 
 const FlagWrapper = styled.img`
 	width: 100%;
+	height: auto;
 	display: flex;
+	object-fit: cover;
 	border-radius: 6px 6px 0 0;
 	background-color: ${({ theme }) => theme.cardBackground};
-	border-bottom: 1px solid ${({ theme }) => theme.themeButtonBackground};
+	border-bottom: 1px solid ${({ theme }) => theme.background};
+
+	@media (min-width: 576px) {
+		height: 160px;
+	}
+	@media (min-width: 768px) {
+		height: 140px;
+	}
+	@media (min-width: 1280px) {
+		height: 160px;
+	}
 `;
 
 const CardDetails = styled.div`
@@ -27,16 +39,34 @@ const CardDetails = styled.div`
 	line-height: 10px;
 `;
 
-const CardTitle = styled.h2`
-	color: ${({ theme }) => theme.textColor};
-	margin-bottom: 20px;
+const CardTitle = styled.h3`
+	width: auto;
+
+	@media (min-width: 576px) {
+		width: 220px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	@media (min-width: 768px) {
+		width: 180px;
+	}
+	@media (min-width: 1024px) {
+		width: 170px;
+	}
+	@media (min-width: 1280px) {
+		width: 200px;
+	}
+	@media (min-width: 1366px) {
+		width: 200px;
+	}
 `;
 
 const CardParagraph = styled.p`
 	color: ${({ theme }) => theme.textColor};
 `;
 
-const Card = ({ flag, name, population, region, capital }) => {
+const CountryCard = ({ flag, name, population, region, capital }) => {
 	return (
 		<CardWrapper>
 			<FlagWrapper src={flag} title={name} />
@@ -57,12 +87,12 @@ const Card = ({ flag, name, population, region, capital }) => {
 	);
 };
 
-Card.propTypes = {
-	flag: PropTypes.node.isRequired,
-	name: PropTypes.node.isRequired,
-	population: PropTypes.node.isRequired,
-	region: PropTypes.node.isRequired,
-	capital: PropTypes.node.isRequired
+CountryCard.propTypes = {
+	flag: string.isRequired,
+	name: string.isRequired,
+	population: number.isRequired,
+	region: string.isRequired,
+	capital: string.isRequired
 };
 
-export default Card;
+export default CountryCard;

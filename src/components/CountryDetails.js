@@ -4,15 +4,15 @@ import { fetchCountries } from '../services/api';
 import { createSlug } from '../utils/slug';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import CountryBorders from './CountryBorders';
 import styled from 'styled-components';
+import Button from './Button';
+import CountryBorders from './CountryBorders';
 
 const ContainerRow = styled.div`
 	width: auto;
 	height: 100%;
 	margin: 20px;
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
 	flex-direction: column;
 
@@ -22,7 +22,6 @@ const ContainerRow = styled.div`
 	}
 	@media (min-width: 768px) {
 		width: 720px;
-		margin: 20px auto;
 	}
 	@media (min-width: 1024px) {
 		width: 960px;
@@ -30,7 +29,6 @@ const ContainerRow = styled.div`
 	}
 	@media (min-width: 1280px) {
 		width: 1140px;
-		margin: 30px auto;
 	}
 	@media (min-width: 1366px) {
 		width: 1280px;
@@ -40,30 +38,27 @@ const ContainerRow = styled.div`
 
 const CountryWrapper = styled.div`
 	width: 100%;
-	margin-top: 60px;
+	margin-top: 30px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
+	justify-content: center;
+	align-items: start;
+
+	@media (min-width: 1024px) {
+		margin-top: 60px;
+		justify-content: space-between;
+	}
 `;
 
 const CountryFlag = styled.img`
 	width: 100%;
 	height: 100%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-	@media (min-width: 576px) {
-		width: 100%;
-	}
 	@media (min-width: 768px) {
-		width: 54%;
+		width: 60%;
 	}
 	@media (min-width: 1024px) {
-		width: 44%;
-	}
-	@media (min-width: 1280px) {
-		width: 44%;
-	}
-	@media (min-width: 1366px) {
 		width: 44%;
 	}
 `;
@@ -71,26 +66,12 @@ const CountryFlag = styled.img`
 const CountryInfo = styled.div`
 	width: 100%;
 
-	@media (min-width: 576px) {
-		width: 100%;
-	}
 	@media (min-width: 768px) {
-		width: 37%;
+		width: 60%;
 	}
 	@media (min-width: 1024px) {
 		width: 47%;
 	}
-	@media (min-width: 1280px) {
-		width: 47%;
-	}
-	@media (min-width: 1366px) {
-		width: 47%;
-	}
-`;
-
-const CountryTitle = styled.h2`
-	font-size: 36px;
-	line-height: 42px;
 `;
 
 const CountryListWrapper = styled.div`
@@ -99,12 +80,6 @@ const CountryListWrapper = styled.div`
 	flex-direction: column;
 
 	@media (min-width: 576px) {
-		flex-direction: row;
-	}
-	@media (min-width: 768px) {
-		flex-direction: column;
-	}
-	@media (min-width: 1024px) {
 		flex-direction: row;
 	}
 `;
@@ -120,36 +95,7 @@ const CountryList = styled.ul`
 		width: 100%;
 	}
 	@media (min-width: 768px) {
-		width: 100%;
-	}
-	@media (min-width: 1024px) {
 		width: 50%;
-	}
-	@media (min-width: 1280px) {
-		width: 50%;
-	}
-	@media (min-width: 1366px) {
-		width: 50%;
-	}
-`;
-
-const ButtonWrapper = styled.div`
-	width: auto;
-	display: flex;
-	align-self: flex-start;
-	padding: 10px 20px;
-	border-radius: 6px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-	background-color: ${({ theme }) => theme.cardBackground};
-	transition: all 0.2s ease-in-out;
-	cursor: pointer;
-
-	a {
-		color: ${({ theme }) => theme.textColor};
-	}
-
-	&:hover {
-		transform: scale(1.1);
 	}
 `;
 
@@ -168,70 +114,65 @@ const CountryDetails = urlParam => {
 	}, [countryName]);
 
 	return (
-		<>
-			<ContainerRow>
-				<ButtonWrapper>
-					<Link to={'/'} title='Back home'>
-						<FontAwesomeIcon
-							style={{ marginRight: '10px' }}
-							icon={faArrowLeft}
-						/>
-						Back
-					</Link>
-				</ButtonWrapper>
-				{countryData.map(country => (
-					<CountryWrapper key={country.name}>
-						<CountryFlag src={country.flag} alt={country.name} />
-						<CountryInfo>
-							<CountryTitle>{country.name}</CountryTitle>
-							<CountryListWrapper>
-								<CountryList>
-									<li>
-										<span style={{ fontWeight: 800 }}>Native Name:</span>{' '}
-										{country.nativeName}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Population:</span>{' '}
-										{country.population.toLocaleString()}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Region:</span>{' '}
-										{country.region}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Sub Region:</span>{' '}
-										{country.subregion}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Capital:</span>{' '}
-										{country.capital}
-									</li>
-								</CountryList>
-								<CountryList>
-									<li>
-										<span style={{ fontWeight: 800 }}>Top Level Domain:</span>{' '}
-										{country.topLevelDomain}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Currencies:</span>{' '}
-										{country.currencies
-											.map(currency => currency.name)
-											.join(', ')}
-									</li>
-									<li>
-										<span style={{ fontWeight: 800 }}>Languages:</span>{' '}
-										{country.languages
-											.map(language => language.name)
-											.join(', ')}
-									</li>
-								</CountryList>
-							</CountryListWrapper>
+		<ContainerRow>
+			<Link to={'../'} title={'Back home'}>
+				<Button>
+					<FontAwesomeIcon style={{ marginRight: '10px' }} icon={faArrowLeft} />
+					Back
+				</Button>
+			</Link>
+			{countryData.map(country => (
+				<CountryWrapper key={country.name}>
+					<CountryFlag src={country.flag} alt={country.name} />
+					<CountryInfo>
+						<h2>{country.name}</h2>
+						<CountryListWrapper>
+							<CountryList>
+								<li>
+									<span style={{ fontWeight: 800 }}>Native Name:</span>{' '}
+									{country.nativeName}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Population:</span>{' '}
+									{country.population.toLocaleString()}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Region:</span>{' '}
+									{country.region}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Sub Region:</span>{' '}
+									{country.subregion}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Capital:</span>{' '}
+									{country.capital}
+								</li>
+							</CountryList>
+							<CountryList>
+								<li>
+									<span style={{ fontWeight: 800 }}>Top Level Domain:</span>{' '}
+									{country.topLevelDomain}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Currencies:</span>{' '}
+									{country.currencies.map(currency => currency.name).join(', ')}
+								</li>
+								<li>
+									<span style={{ fontWeight: 800 }}>Languages:</span>{' '}
+									{country.languages.map(language => language.name).join(', ')}
+								</li>
+							</CountryList>
+						</CountryListWrapper>
+						{country.borders.length > 0 ? (
 							<CountryBorders borderName={country.borders} />
-						</CountryInfo>
-					</CountryWrapper>
-				))}
-			</ContainerRow>
-		</>
+						) : (
+							<p style={{ fontWeight: 800 }}>This country has no borders.</p>
+						)}
+					</CountryInfo>
+				</CountryWrapper>
+			))}
+		</ContainerRow>
 	);
 };
 
