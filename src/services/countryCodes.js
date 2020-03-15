@@ -6,7 +6,7 @@ const fetchCodes = borderName => {
 	)
 		.then(response => response.json())
 		.catch(error => {
-			throw new Error(`fetchCountries failed: ${error.message}`);
+			throw new Error(`fetchCodes failed: ${error.message}`);
 		});
 };
 
