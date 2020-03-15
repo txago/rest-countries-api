@@ -53,6 +53,7 @@ const CountryWrapper = styled.div`
 const CountryFlag = styled.img`
 	width: 100%;
 	height: 100%;
+	border-radius: 4px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
 	@media (min-width: 768px) {

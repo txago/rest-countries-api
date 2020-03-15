@@ -10,6 +10,7 @@ import CountryCard from './CountryCard';
 const ContainerRow = styled.div`
 	margin: 20px;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 
 	@media (min-width: 576px) {
@@ -75,7 +76,21 @@ const CountriesWrapper = styled.div`
 `;
 
 const InputWrapper = styled.div`
+	width: 100%;
+	height: 50px;
 	position: relative;
+
+	&:first-child {
+		margin-bottom: 10px;
+	}
+
+	@media (min-width: 576px) {
+		width: auto;
+
+		&:first-child {
+			margin-bottom: 0;
+		}
+	}
 `;
 
 const SearchInput = styled.input`
@@ -83,12 +98,13 @@ const SearchInput = styled.input`
 	font-size: 14px;
 	line-height: 18px;
 	color: ${({ theme }) => theme.textColor};
-	width: 400px;
+	width: 100%;
+	height: 50px;
 	position: relative;
 	background-color: ${({ theme }) => theme.cardBackground};
 	background-position: 10px 10px;
 	background-repeat: no-repeat;
-	padding: 20px 20px 20px 50px;
+	padding: 10px 20px 10px 50px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	border: none;
 	border-radius: 6px;
@@ -97,6 +113,16 @@ const SearchInput = styled.input`
 		color: ${({ theme }) => theme.textColor};
 		opacity: 0.5;
 	}
+
+	@media (min-width: 576px) {
+		width: 320px;
+	}
+	@media (min-width: 768px) {
+		width: 300px;
+	}
+	@media (min-width: 1024px) {
+		width: 400px;
+	}
 `;
 
 const Select = styled.select`
@@ -104,18 +130,23 @@ const Select = styled.select`
 	font-size: 14px;
 	line-height: 18px;
 	color: ${({ theme }) => theme.textColor};
-	width: 200px;
+	width: 100%;
+	height: 50px;
 	position: relative;
 	background-color: ${({ theme }) => theme.cardBackground};
 	background-position: 10px 10px;
 	background-repeat: no-repeat;
-	padding: 20px;
+	padding: 10px 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	border: none;
 	border-radius: 6px;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
+
+	@media (min-width: 576px) {
+		width: 200px;
+	}
 `;
 
 const CountriesList = () => {
@@ -163,7 +194,7 @@ const CountriesList = () => {
 						placeholder='Search for a country...'
 					/>
 					<FontAwesomeIcon
-						style={{ position: 'absolute', top: 20, left: 20, opacity: 0.5 }}
+						style={{ position: 'absolute', top: 16, left: 20, opacity: 0.5 }}
 						icon={faSearch}
 					/>
 				</InputWrapper>
@@ -179,7 +210,7 @@ const CountriesList = () => {
 						<option value='Oceania'>Oceania</option>
 					</Select>
 					<FontAwesomeIcon
-						style={{ position: 'absolute', top: 20, right: 20, opacity: 0.5 }}
+						style={{ position: 'absolute', top: 17, right: 20, opacity: 0.5 }}
 						icon={faChevronDown}
 					/>
 				</InputWrapper>
