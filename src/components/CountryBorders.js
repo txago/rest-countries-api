@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { node } from 'prop-types';
+import styled from 'styled-components';
+
+import Button from './Button';
 import { fetchCodes } from '../services/countryCodes';
 import { createSlug } from '../utils/slug';
-import styled from 'styled-components';
-import Button from './Button';
 
 const CountryRelated = styled.div`
 	width: auto;

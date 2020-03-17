@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { node } from 'prop-types';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);

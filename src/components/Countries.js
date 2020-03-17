@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchCountries } from '../services/api';
-import { createSlug } from '../utils/slug';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+
 import CountryCard from './CountryCard';
+import SearchFilter from './SearchFilter';
+import SelectFilter from './SelectFilter';
+import { fetchCountries } from '../services/api';
 
 const ContainerRow = styled.div`
 	margin: 20px;
@@ -93,63 +92,7 @@ const InputWrapper = styled.div`
 	}
 `;
 
-const SearchInput = styled.input`
-	font-family: 'Nunito Sans', sans-serif;
-	font-size: 14px;
-	line-height: 18px;
-	color: ${({ theme }) => theme.textColor};
-	width: 100%;
-	height: 50px;
-	position: relative;
-	background-color: ${({ theme }) => theme.cardBackground};
-	background-position: 10px 10px;
-	background-repeat: no-repeat;
-	padding: 10px 20px 10px 50px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	border: none;
-	border-radius: 6px;
-
-	::placeholder {
-		color: ${({ theme }) => theme.textColor};
-		opacity: 0.5;
-	}
-
-	@media (min-width: 576px) {
-		width: 320px;
-	}
-	@media (min-width: 768px) {
-		width: 300px;
-	}
-	@media (min-width: 1024px) {
-		width: 400px;
-	}
-`;
-
-const Select = styled.select`
-	font-family: 'Nunito Sans', sans-serif;
-	font-size: 14px;
-	line-height: 18px;
-	color: ${({ theme }) => theme.textColor};
-	width: 100%;
-	height: 50px;
-	position: relative;
-	background-color: ${({ theme }) => theme.cardBackground};
-	background-position: 10px 10px;
-	background-repeat: no-repeat;
-	padding: 10px 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	border: none;
-	border-radius: 6px;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-
-	@media (min-width: 576px) {
-		width: 200px;
-	}
-`;
-
-const CountriesList = () => {
+const Countries = () => {
 	const [countryData, setCountryData] = useState([]);
 	const [query, setQuery] = useState('');
 	const [region, setRegion] = useState('');
@@ -186,53 +129,28 @@ const CountriesList = () => {
 		<>
 			<ContainerRow>
 				<InputWrapper>
-					<SearchInput
+					<SearchFilter
 						value={query}
 						onChange={handleCountrySearchChange}
 						name='search'
 						type='search'
-						placeholder='Search for a country...'
-					/>
-					<FontAwesomeIcon
-						style={{ position: 'absolute', top: 16, left: 20, opacity: 0.5 }}
-						icon={faSearch}
 					/>
 				</InputWrapper>
 				<InputWrapper>
-					<Select value={region} onChange={handleRegionChange} name='region'>
-						<option value='' defaultValue>
-							Filter by Region
-						</option>
-						<option value='Africa'>Africa</option>
-						<option value='America'>America</option>
-						<option value='Asia'>Asia</option>
-						<option value='Europe'>Europe</option>
-						<option value='Oceania'>Oceania</option>
-					</Select>
-					<FontAwesomeIcon
-						style={{ position: 'absolute', top: 17, right: 20, opacity: 0.5 }}
-						icon={faChevronDown}
+					<SelectFilter
+						value={region}
+						onChange={handleRegionChange}
+						name='region'
 					/>
 				</InputWrapper>
 			</ContainerRow>
 			<CountriesWrapper>
 				{countryData.map(country => (
-					<Link
-						to={`/${createSlug(country.name)}`}
-						key={country.name}
-						title={country.name}>
-						<CountryCard
-							flag={country.flag}
-							name={country.name}
-							population={country.population}
-							region={country.region}
-							capital={country.capital}
-						/>
-					</Link>
+					<CountryCard {...country} key={country.name} />
 				))}
 			</CountriesWrapper>
 		</>
 	);
 };
 
-export default CountriesList;
+export default Countries;

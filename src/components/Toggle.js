@@ -1,9 +1,9 @@
 import React from 'react';
 import { func, string } from 'prop-types';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon as farFaMoon } from '@fortawesome/free-regular-svg-icons';
 import { faMoon as fasFaMoon } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 const ToggleButton = styled.button`
 	font-family: 'Nunito Sans', sans-serif;

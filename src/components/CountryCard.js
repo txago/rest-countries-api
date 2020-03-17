@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { string, number } from 'prop-types';
+
+import { createSlug } from '../utils/slug';
 
 const CardWrapper = styled.div`
 	font-size: 14px;
@@ -66,33 +68,28 @@ const CardParagraph = styled.p`
 	color: ${({ theme }) => theme.textColor};
 `;
 
-const CountryCard = ({ flag, name, population, region, capital }) => {
-	return (
-		<CardWrapper>
-			<FlagWrapper src={flag} title={name} />
-			<CardDetails>
-				<CardTitle>{name}</CardTitle>
-				<CardParagraph>
-					<span style={{ fontWeight: 600 }}>Population:</span>{' '}
-					{population.toLocaleString()}
-				</CardParagraph>
-				<CardParagraph>
-					<span style={{ fontWeight: 600 }}>Region:</span> {region}
-				</CardParagraph>
-				<CardParagraph>
-					<span style={{ fontWeight: 600 }}>Capital:</span> {capital}
-				</CardParagraph>
-			</CardDetails>
-		</CardWrapper>
-	);
-};
+const CountryCard = props => {
+	const { flag, name, population, region, capital, ...rest } = props;
 
-CountryCard.propTypes = {
-	flag: string.isRequired,
-	name: string.isRequired,
-	population: number.isRequired,
-	region: string.isRequired,
-	capital: string.isRequired
+	return (
+		<Link to={`/${createSlug(name)}`} title={name}>
+			<CardWrapper {...rest}>
+				<FlagWrapper src={flag} title={name} />
+				<CardDetails>
+					<CardTitle>{name}</CardTitle>
+					<CardParagraph>
+						<span style={{ fontWeight: 600 }}>Population:</span> {population}
+					</CardParagraph>
+					<CardParagraph>
+						<span style={{ fontWeight: 600 }}>Region:</span> {region}
+					</CardParagraph>
+					<CardParagraph>
+						<span style={{ fontWeight: 600 }}>Capital:</span> {capital}
+					</CardParagraph>
+				</CardDetails>
+			</CardWrapper>
+		</Link>
+	);
 };
 
 export default CountryCard;
