@@ -78,7 +78,8 @@ const CountryCard = props => {
 				<CardDetails>
 					<CardTitle>{name}</CardTitle>
 					<CardParagraph>
-						<span style={{ fontWeight: 600 }}>Population:</span> {population}
+						<span style={{ fontWeight: 600 }}>Population:</span>{' '}
+						{population.toLocaleString()}
 					</CardParagraph>
 					<CardParagraph>
 						<span style={{ fontWeight: 600 }}>Region:</span> {region}
